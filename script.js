@@ -194,11 +194,13 @@ function loadImage(src) {
 
 function renderGallery(items = fullGallery) {
   const track = document.getElementById("galleryTrack");
-  track.innerHTML = items.map(([src]) => `
+  const loopItems = [...items, ...items];
+  track.innerHTML = loopItems.map(([src]) => `
     <article class="gallery-item">
       <img src="${src}" alt="neochibi milady derivative pfp">
     </article>
   `).join("");
+  track.scrollLeft = 0;
 }
 
 function renderMosaics() {
@@ -230,12 +232,12 @@ function setupButtons() {
 
   document.getElementById("galleryPrev").addEventListener("click", () => {
     const track = document.getElementById("galleryTrack");
-    track.scrollLeft = Math.max(0, track.scrollLeft - 360);
+    track.scrollBy({ left: -420, behavior: "smooth" });
   });
 
   document.getElementById("galleryNext").addEventListener("click", () => {
     const track = document.getElementById("galleryTrack");
-    track.scrollLeft = Math.min(track.scrollWidth, track.scrollLeft + 360);
+    track.scrollBy({ left: 420, behavior: "smooth" });
   });
 
   document.getElementById("shuffleGallery").addEventListener("click", () => {
@@ -256,21 +258,30 @@ function setupButtons() {
 function setupGalleryAutoplay() {
   const track = document.getElementById("galleryTrack");
   let paused = false;
+  let lastTime = performance.now();
+  const pixelsPerSecond = 38;
 
   track.addEventListener("mouseenter", () => { paused = true; });
   track.addEventListener("mouseleave", () => { paused = false; });
   track.addEventListener("touchstart", () => { paused = true; }, { passive: true });
   track.addEventListener("touchend", () => { paused = false; }, { passive: true });
 
-  window.setInterval(() => {
-    if (paused || track.scrollWidth <= track.clientWidth) return;
-    const maxScroll = track.scrollWidth - track.clientWidth - 4;
-    if (track.scrollLeft >= maxScroll) {
-      track.scrollLeft = 0;
-      return;
+  function animate(now) {
+    const elapsed = Math.min(64, now - lastTime);
+    lastTime = now;
+
+    if (!paused && track.scrollWidth > track.clientWidth) {
+      const loopPoint = track.scrollWidth / 2;
+      track.scrollLeft += (pixelsPerSecond * elapsed) / 1000;
+      if (track.scrollLeft >= loopPoint) {
+        track.scrollLeft -= loopPoint;
+      }
     }
-    track.scrollLeft += 168;
-  }, 1800);
+
+    requestAnimationFrame(animate);
+  }
+
+  requestAnimationFrame(animate);
 }
 
 function setupCtaRotator() {
