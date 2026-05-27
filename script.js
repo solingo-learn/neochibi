@@ -197,7 +197,9 @@ function renderGallery(items = fullGallery) {
   const loopItems = [...items, ...items];
   track.innerHTML = loopItems.map(([src]) => `
     <article class="gallery-item">
-      <img src="${src}" alt="neochibi milady derivative pfp">
+      <button class="gallery-preview" type="button" data-src="${src}" aria-label="Voir ce NeoChibi en grand">
+        <img src="${src}" alt="neochibi milady derivative pfp">
+      </button>
     </article>
   `).join("");
   track.scrollLeft = 0;
@@ -245,6 +247,20 @@ function setupButtons() {
     showToast("Gallery shuffled.");
   });
 
+  document.getElementById("galleryTrack").addEventListener("click", event => {
+    const button = event.target.closest(".gallery-preview");
+    if (!button) return;
+    openGalleryLightbox(button.dataset.src);
+  });
+
+  document.getElementById("lightboxClose").addEventListener("click", closeGalleryLightbox);
+  document.getElementById("galleryLightbox").addEventListener("click", event => {
+    if (event.target.id === "galleryLightbox") closeGalleryLightbox();
+  });
+  window.addEventListener("keydown", event => {
+    if (event.key === "Escape") closeGalleryLightbox();
+  });
+
   document.getElementById("newsletter").addEventListener("submit", event => {
     event.preventDefault();
     event.currentTarget.reset();
@@ -253,6 +269,20 @@ function setupButtons() {
 
   setupGalleryAutoplay();
   setupCtaRotator();
+}
+
+function openGalleryLightbox(src) {
+  const lightbox = document.getElementById("galleryLightbox");
+  const image = document.getElementById("lightboxImage");
+  image.src = src;
+  lightbox.classList.add("show");
+  lightbox.setAttribute("aria-hidden", "false");
+}
+
+function closeGalleryLightbox() {
+  const lightbox = document.getElementById("galleryLightbox");
+  lightbox.classList.remove("show");
+  lightbox.setAttribute("aria-hidden", "true");
 }
 
 function setupGalleryAutoplay() {

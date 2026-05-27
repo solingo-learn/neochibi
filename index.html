@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=24">
+    <link rel="stylesheet" href="styles.css?v=25">
   </head>
   <body>
     <div class="page-mosaic" id="pageMosaic" aria-hidden="true"></div>
@@ -28,6 +28,7 @@
         <a href="#community">Community</a>
       </nav>
       <div class="header-actions">
+        <span class="contract-pill">Contract address soon</span>
         <a class="icon-link" href="https://x.com/search?q=neochibi%20pf" target="_blank" rel="noreferrer" aria-label="X">𝕏</a>
         <a class="icon-link" href="#community" aria-label="Discord">◖◗</a>
         <button class="buy-btn" data-scroll="#generator">Buy NeoChibi</button>
@@ -57,12 +58,14 @@
         </div>
         <div class="hero-art">
           <div class="hero-mosaic" id="heroMosaic" aria-hidden="true"></div>
-          <img src="assets/a1lon9-exact.png" alt="a1Lon9 neochibi character preview">
-          <div class="hero-card">
+          <a class="a1lon9-image-link" href="https://x.com/a1lon9/photo" target="_blank" rel="noreferrer" aria-label="Open a1lon9 on X">
+            <img src="assets/a1lon9-exact.png" alt="a1Lon9 neochibi character preview">
+          </a>
+          <a class="hero-card" href="https://x.com/a1lon9/photo" target="_blank" rel="noreferrer">
             <strong>a1lon9 Ⓝ</strong>
             <span>Founder of Pumpfun</span>
             <span>NeoChibi legend</span>
-          </div>
+          </a>
         </div>
       </section>
 
@@ -242,7 +245,7 @@
               <div>
                 <strong>NeoChibi Army ✓</strong>
                 <small>@neochibiarmy</small>
-                <p>NeoChibi &gt; Everything. Let's chibify the whole timeline.</p>
+                <p>NeoChibi &gt; Everything. Let's neochibify the whole timeline.</p>
                 <span>♡ 233 · ↻ 66</span>
               </div>
             </article>
@@ -310,7 +313,11 @@
       </form>
     </footer>
 
+    <div class="lightbox" id="galleryLightbox" aria-hidden="true">
+      <button class="lightbox-close" id="lightboxClose" aria-label="Fermer">×</button>
+      <img id="lightboxImage" src="assets/a1lon9-exact.png" alt="NeoChibi PFP preview">
+    </div>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="script.js?v=24"></script>
+    <script src="script.js?v=25"></script>
   </body>
 </html>
